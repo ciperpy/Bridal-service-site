@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suriya's Bridal Studio | Makeup & Mehndi Artist</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff5e8;
+            color: #2c2c2c;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .logo {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Color Variables */
+        :root {
+            --primary: #7a2c3e;
+            --primary-dark: #5a1e2c;
+            --secondary: #d4af7a;
+            --secondary-light: #e8d4b0;
+            --light: #fff5e8;
+            --dark: #2c2c2c;
+            --gray: #6b6b6b;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 245, 232, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(122,44,62,0.7), rgba(212,175,122,0.3)), url('https://images.unsplash.com/photo-1605496036006-fa2e0e6b7b4b?w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 0;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--primary-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-outline {
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        /* Gallery */
+        .gallery-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 8px 20px;
+            border: none;
+            background: var(--secondary-light);
+            cursor: pointer;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 20px;
+            transition: bottom 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            bottom: 0;
+        }
+
+        /* Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .package-header {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .package-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-price {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .package-content {
+            padding: 2rem;
+        }
+
+        .package-content ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .package-content li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .package-content i {
+            color: var(--secondary);
+        }
+
+        .popular-badge {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Booking Form */
+        .booking-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: var(--light);
+            margin: 60px auto;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            border-radius: 20px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        .modal-close:hover {
+            color: var(--secondary);
+        }
+
+        .reviews-modal-grid, .videos-modal-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .review-modal-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .video-modal-card {
+            position: relative;
+            padding-bottom: 177%;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .video-modal-card iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .view-btn {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 10px;
+        }
+
+        .view-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .buttons-container {
+            text-align: center;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-item i {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Floating Action Buttons */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .float-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .float-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .float-whatsapp {
+            background: #25D366;
+        }
+
+        .float-call {
+            background: #34B7F1;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Admin Panel Styles */
+        .admin-login, .admin-dashboard {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .admin-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .admin-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .admin-gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .admin-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .close-admin {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .url-input-group {
+            margin-bottom: 1rem;
+        }
+
+        .url-input-group input, .url-input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-top: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .instruction-box {
+            background: var(--secondary-light);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 12px;
+        }
+
+        .sample-url {
+            background: #f0f0f0;
+            padding: 8px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 11px;
+            word-break: break-all;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .menu-btn {
+                display: block;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .section {
+                padding: 3rem 5%;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .modal-content {
+                margin: 40px auto;
+                padding: 1.5rem;
+            }
+            .floating-buttons {
+                bottom: 20px;
+                right: 20px;
+                gap: 10px;
+            }
+            .float-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">Suriya<span>'s</span> Bridal Studio</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#packages">Packages</a></li>
+            <li><a href="#booking">Book Now</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Get your perfect bridal glow</h1>
+            <p>Suriya Nabi - 4+ Years of Excellence in Makeup & Mehndi Artistry</p>
+            <div class="hero-buttons">
+                <a href="#booking" class="btn btn-primary">Book Now</a>
+                <a href="#gallery" class="btn btn-outline">View Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title">About Suriya</h2>
+        <div style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.1rem; line-height: 1.8;">
+            <p>Suriya is a passionate and dedicated makeup and mehndi artist who has been in love with her craft since childhood. What started as a deep interest has now grown into a professional journey backed by over 4 years of hands-on experience.</p>
+            <p style="margin-top: 1rem;">With a keen eye for detail and a commitment to perfection, she specializes in creating elegant bridal looks and intricate mehndi designs that enhance natural beauty. Her goal is simple — to make every client feel confident, beautiful, and truly special on their important day.</p>
+            <p style="margin-top: 1rem; font-weight: 500; color: var(--primary);">Suriya believes that makeup is not just about appearance, but about bringing out the best version of every individual with grace and style.</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section" style="background: var(--secondary-light);">
+        <h2 class="section-title">Our Work</h2>
+        <div class="gallery-categories">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="bridal">Bridal Makeup</button>
+            <button class="category-btn" data-category="party">Party Makeup</button>
+            <button class="category-btn" data-category="mehndi">Mehndi Designs</button>
+        </div>
+        <div class="gallery-grid" id="gallery-grid">
+            <div style="text-align: center; padding: 2rem;">Loading gallery...</div>
+        </div>
+        
+        <!-- Buttons to view Reviews and Reels -->
+        <div class="buttons-container">
+            <button class="view-btn" onclick="openReviewsModal()">
+                <i class="fas fa-star"></i> Client Reviews
+            </button>
+            <button class="view-btn" onclick="openReelsModal()">
+                <i class="fab fa-instagram"></i> Instagram Reels
+            </button>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="section">
+        <h2 class="section-title">Packages & Pricing</h2>
+        <div class="packages-grid">
+            <div class="package-card">
+                <div class="package-header">
+                    <h3>Basic Package</h3>
+                    <div class="package-price">₹3,000</div>
+                    <div>Party / Light Makeup</div>
+                </div>
+                <div class="package-content">
+                    <ul>
+                        <li><i class="fas fa-check"></i> Light makeup look</li>
+                        <li><i class="fas fa-check"></i> Simple touch-up</li>
+                        <li><i class="fas fa-clock"></i> Duration: 1–2 hours</li>
+                    </ul>
+                    <p style="color: var(--gray);">👉 Best for small events / functions</p>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-header" style="background: var(--secondary); color: var(--primary-dark);">
+                    <h3>Standard Package</h3>
+                    <div class="package-price">₹4,000</div>
+                    <div>Engagement / Occasion Makeup</div>
+                    <span class="popular-badge">🔥 Most Popular Choice</span>
+                </div>
+                <div class="package-content">
+                    <ul>
+                        <li><i class="fas fa-check"></i> HD makeup</li>
+                        <li><i class="fas fa-check"></i> Basic mehndi (hands)</li>
+                        <li><i class="fas fa-check"></i> Long-lasting finish</li>
+                        <li><i class="fas fa-clock"></i> Duration: 2–3 hours</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-header">
+                    <h3>Premium Bridal Package</h3>
+                    <div class="package-price">₹5,000</div>
+                    <div>Full Bridal Makeup</div>
+                </div>
+                <div class="package-content">
+                    <ul>
+                        <li><i class="fas fa-check"></i> Full HD / Bridal makeup</li>
+                        <li><i class="fas fa-check"></i> Detailed bridal mehndi</li>
+                        <li><i class="fas fa-check"></i> Premium products used</li>
+                        <li><i class="fas fa-check"></i> Complete look consultation</li>
+                        <li><i class="fas fa-clock"></i> Duration: 3–5 hours</li>
+                    </ul>
+                    <p style="color: var(--gray); margin-top: 1rem;">👉 Perfect for wedding day 👑</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="section" style="background: var(--secondary-light);">
+        <h2 class="section-title">Book Your Appointment</h2>
+        <div class="booking-container">
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label>Select Service</label>
+                    <select id="service" required>
+                        <option value="">Choose a service</option>
+                        <option value="Basic Package - ₹3,000 (Party/Light Makeup)">Basic Package - ₹3,000 (Party/Light Makeup)</option>
+                        <option value="Standard Package - ₹4,000 (Engagement/Occasion Makeup + Basic Mehndi)">Standard Package - ₹4,000 (Engagement/Occasion Makeup + Basic Mehndi)</option>
+                        <option value="Premium Bridal Package - ₹5,000 (Full Bridal Makeup + Detailed Mehndi)">Premium Bridal Package - ₹5,000 (Full Bridal Makeup + Detailed Mehndi)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="name" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label>Additional Notes (Optional)</label>
+                    <textarea id="notes" rows="3" placeholder="Any special requests?"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Book Now</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">✨ You'll receive a confirmation shortly ✨</p>
+        </div>
+    </section>
+
+    <!-- Reviews Modal -->
+    <div id="reviewsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeReviewsModal()">&times;</span>
+            <h2>✨ Client Love ✨</h2>
+            <div class="reviews-modal-grid">
+                <div class="review-modal-card">
+                    <div class="review-text">"Absolutely loved my bridal makeup! Suriya made me look like a princess on my wedding day. The mehndi was so beautiful. Highly recommended!"</div>
+                    <div class="review-name">- Fatima Ahmed</div>
+                </div>
+                <div class="review-modal-card">
+                    <div class="review-text">"The mehndi designs were so intricate and beautiful. Very professional and punctual service. Made my engagement day extra special."</div>
+                    <div class="review-name">- Ayesha Khan</div>
+                </div>
+                <div class="review-modal-card">
+                    <div class="review-text">"Best makeup and mehndi artist in Budgam! My wedding look was perfect. Suriya is so talented and made me feel beautiful. Thank you!"</div>
+                    <div class="review-name">- Zainab Ahmad</div>
+                </div>
+                <div class="review-modal-card">
+                    <div class="review-text">"Amazing work! The bridal makeup lasted all day and the mehndi design was exactly what I wanted. Very happy with the service."</div>
+                    <div class="review-name">- Mariyam Hassan</div>
+                </div>
+                <div class="review-modal-card">
+                    <div class="review-text">"Suriya is so skilled and professional. She understood exactly what I wanted and delivered beyond expectations. Highly recommend her services!"</div>
+                    <div class="review-name">- Safiya Bhat</div>
+                </div>
+                <div class="review-modal-card">
+                    <div class="review-text">"The attention to detail in both makeup and mehndi was incredible. Felt like a queen on my special day. Thank you Suriya!"</div>
+                    <div class="review-name">- Hadiya Mir</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reels Modal -->
+    <div id="reelsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeReelsModal()">&times;</span>
+            <h2>📸 Instagram Reels</h2>
+            <div class="videos-modal-grid">
+                <div class="video-modal-card">
+                    <iframe src="https://www.instagram.com/p/DWjj-NKkU64/embed" frameborder="0"></iframe>
+                </div>
+                <div class="video-modal-card">
+                    <iframe src="https://www.instagram.com/p/DSKjwqyEXba/embed" frameborder="0"></iframe>
+                </div>
+                <div class="video-modal-card">
+                    <iframe src="https://www.instagram.com/p/DPYMXg4EQWY/embed" frameborder="0"></iframe>
+                </div>
+                <div class="video-modal-card">
+                    <iframe src="https://www.instagram.com/p/DOPvrpIkclV/embed" frameborder="0"></iframe>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">📸 Follow us: <strong>@mehandi_art_by_suriya</strong></p>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2 class="section-title">Get in Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>+91 6005644125</div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>ubaidbilal957@gmail.com</div>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <div>@mehandi_art_by_suriya</div>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>+91 7006336467 (WhatsApp)</div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>Pethmakhama Magam, Budgam, Jammu and Kashmir</div>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe src="https://maps.google.com/maps?q=Budgam%2C%20Jammu%20and%20Kashmir&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 Suriya's Bridal Studio. All rights reserved. | Bringing your dream bridal look to life ✨</p>
+    </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-buttons">
+        <a href="tel:+916005644125" class="float-btn float-call" title="Call Now">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+        <a href="https://wa.me/917006336467?text=Hi%2C%20I%20want%20to%20book%20a%20service.%20Please%20share%20details." class="float-btn float-whatsapp" target="_blank" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <script>
+        // Modal Functions
+        function openReviewsModal() {
+            document.getElementById('reviewsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeReviewsModal() {
+            document.getElementById('reviewsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function openReelsModal() {
+            document.getElementById('reelsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeReelsModal() {
+            document.getElementById('reelsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        window.onclick = function(event) {
+            const reviewsModal = document.getElementById('reviewsModal');
+            const reelsModal = document.getElementById('reelsModal');
+            if (event.target == reviewsModal) closeReviewsModal();
+            if (event.target == reelsModal) closeReelsModal();
+        }
+        
+        // GALLERY MANAGEMENT - ONLY STORES URLS (Works on all devices!)
+        const ADMIN_PASSWORD = "098321opop";
+        let galleryPhotos = [];
+        
+        function loadGallery() {
+            const saved = localStorage.getItem('suriya_gallery_urls');
+            if(saved) {
+                galleryPhotos = JSON.parse(saved);
+                console.log('Loaded photos:', galleryPhotos);
+            } else {
+                // Default sample photos with working URLs
+                galleryPhotos = [
+                    { id: Date.now() + 1, url: 'https://images.unsplash.com/photo-1605496036006-fa2e0e6b7b4b?w=400', category: 'bridal', title: 'Bridal Makeup' },
+                    { id: Date.now() + 2, url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400', category: 'party', title: 'Party Makeup' },
+                    { id: Date.now() + 3, url: 'https://images.unsplash.com/photo-1588392382834-89c6b12b0ddb?w=400', category: 'mehndi', title: 'Beautiful Mehndi' }
+                ];
+                saveGallery();
+            }
+            displayGalleryOnSite();
+        }
+        
+        function saveGallery() {
+            localStorage.setItem('suriya_gallery_urls', JSON.stringify(galleryPhotos));
+            console.log('Saved photos:', galleryPhotos);
+        }
+        
+        function displayGalleryOnSite() {
+            const activeBtn = document.querySelector('.category-btn.active');
+            const currentCategory = activeBtn ? activeBtn.dataset.category : 'all';
+            let filtered = galleryPhotos;
+            if(currentCategory !== 'all') {
+                filtered = galleryPhotos.filter(p => p.category === currentCategory);
+            }
+            
+            const grid = document.getElementById('gallery-grid');
+            if(grid) {
+                if(filtered.length === 0) {
+                    grid.innerHTML = '<div style="text-align: center; padding: 2rem;">No photos yet. Add photos from admin panel!</div>';
+                } else {
+                    grid.innerHTML = filtered.map(photo => `
+                        <div class="gallery-item">
+                            <img src="${photo.url}" alt="${photo.title}" onerror="this.src='https://via.placeholder.com/300?text=Invalid+URL+Check+Link'">
+                            <div class="gallery-overlay">
+                                <p>✨ ${photo.title}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+        }
+        
+        // Check for admin access
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('admin') === 'true') {
+            showAdminLogin();
+        }
+        
+        function showAdminLogin() {
+            const loginDiv = document.createElement('div');
+            loginDiv.className = 'admin-login';
+            loginDiv.innerHTML = `
+                <div class="admin-box">
+                    <h2 style="color: var(--primary); margin-bottom: 1rem;">Admin Login</h2>
+                    <input type="password" id="adminPassword" placeholder="Enter Password" style="width: 100%; padding: 10px; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 10px;">
+                    <button onclick="checkAdminPassword()" class="btn btn-primary" style="width: 100%;">Login</button>
+                </div>
+            `;
+            document.body.appendChild(loginDiv);
+        }
+        
+        window.checkAdminPassword = function() {
+            const password = document.getElementById('adminPassword').value;
+            if(password === ADMIN_PASSWORD) {
+                document.querySelector('.admin-login').remove();
+                showAdminDashboard();
+            } else {
+                alert('Wrong password!');
+            }
+        }
+        
+        function showAdminDashboard() {
+            const dashboard = document.createElement('div');
+            dashboard.className = 'admin-dashboard';
+            dashboard.innerHTML = `
+                <div class="admin-box">
+                    <div class="admin-header">
+                        <h2 style="color: var(--primary);">Admin Dashboard 📸</h2>
+                        <button onclick="closeAdmin()" class="close-admin" style="background: #dc3545;">Close</button>
+                    </div>
+                    
+                    <div class="instruction-box">
+                        <strong>📌 IMPORTANT - FOR PHOTOS TO SHOW ON ALL DEVICES:</strong><br><br>
+                        1. Go to <a href="https://imgbb.com" target="_blank" style="color: var(--primary);">imgbb.com</a> on your phone<br>
+                        2. Click "Start Uploading" and select your photo<br>
+                        3. After upload, copy the <strong>"Direct Link"</strong><br>
+                        4. Paste that link below and click "Add Photo"<br><br>
+                        <strong>✅ This method makes photos visible on EVERY device!</strong><br><br>
+                        <div class="sample-url">Example URL: https://i.ibb.co/xxxxx/image.jpg</div>
+                    </div>
+                    
+                    <div class="url-input-group">
+                        <label>📷 Image URL (Paste Direct Link from ImgBB):</label>
+                        <input type="text" id="imageUrl" placeholder="https://i.ibb.co/xxxxx/image.jpg" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
+                    </div>
+                    
+                    <div class="url-input-group">
+                        <label>🏷️ Category:</label>
+                        <select id="categorySelect" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
+                            <option value="bridal">Bridal Makeup</option>
+                            <option value="party">Party Makeup</option>
+                            <option value="mehndi">Mehndi Designs</option>
+                        </select>
+                    </div>
+                    
+                    <div class="url-input-group">
+                        <label>📝 Title:</label>
+                        <input type="text" id="titleInput" placeholder="Beautiful Bridal Makeup" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
+                    </div>
+                    
+                    <button onclick="addPhotoByUrl()" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">➕ Add Photo (Visible on ALL Devices)</button>
+                    
+                    <h3 style="margin: 1rem 0;">📸 Current Gallery (${galleryPhotos.length} photos)</h3>
+                    <div id="adminGalleryGrid" class="admin-gallery-grid"></div>
+                    
+                    <button onclick="exportPhotos()" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">📥 Export Photos (Backup)</button>
+                    <button onclick="importPhotos()" class="btn btn-outline" style="margin-top: 0.5rem; width: 100%; background: var(--secondary-light);">📤 Import Photos (Restore)</button>
+                    <p style="text-align: center; margin-top: 1rem; font-size: 12px; color: green;">✅ Photos stored as URLs - visible on ALL devices!</p>
+                </div>
+            `;
+            document.body.appendChild(dashboard);
+            refreshAdminGallery();
+        }
+        
+        window.addPhotoByUrl = function() {
+            const url = document.getElementById('imageUrl').value.trim();
+            const category = document.getElementById('categorySelect').value;
+            const title = document.getElementById('titleInput').value.trim() || 'Beautiful Work';
+            
+            if(!url) {
+                alert('Please paste an image URL from ImgBB!');
+                return;
+            }
+            
+            // Check if it's a valid URL
+            if(!url.startsWith('http://') && !url.startsWith('https://')) {
+                alert('Please enter a valid URL starting with http:// or https://');
+                return;
+            }
+            
+            // Check if it's a base64 image (from direct upload)
+            if(url.startsWith('data:image')) {
+                alert('❌ This is a direct upload, not a URL! Please use ImgBB to get a proper URL that works on all devices.');
+                return;
+            }
+            
+            const newPhoto = {
+                id: Date.now(),
+                url: url,
+                category: category,
+                title: title
+            };
+            
+            galleryPhotos.push(newPhoto);
+            saveGallery();
+            displayGalleryOnSite();
+            refreshAdminGallery();
+            
+            document.getElementById('imageUrl').value = '';
+            document.getElementById('titleInput').value = '';
+            
+            alert('✓ Photo added successfully!\n\nThis photo will now be visible on ALL devices - phone, laptop, tablet, everywhere!');
+        }
+        
+        window.refreshAdminGallery = function() {
+            const grid = document.getElementById('adminGalleryGrid');
+            if(grid) {
+                if(galleryPhotos.length === 0) {
+                    grid.innerHTML = '<p style="text-align: center; padding: 1rem;">No photos yet. Add some using the form above!</p>';
+                } else {
+                    grid.innerHTML = galleryPhotos.map(photo => `
+                        <div class="admin-gallery-item">
+                            <img src="${photo.url}" alt="${photo.title}" onerror="this.src='https://via.placeholder.com/150?text=Broken+URL'">
+                            <button class="delete-btn" onclick="deletePhoto(${photo.id})">×</button>
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; padding: 5px; font-size: 10px; text-align: center;">
+                                ${photo.title}<br>
+                                <span style="font-size: 8px;">${photo.category}</span>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+        }
+        
+        window.deletePhoto = function(id) {
+            if(confirm('Are you sure you want to delete this photo?')) {
+                galleryPhotos = galleryPhotos.filter(p => p.id !== id);
+                saveGallery();
+                displayGalleryOnSite();
+                refreshAdminGallery();
+                alert('✓ Photo deleted successfully!');
+            }
+        }
+        
+        window.closeAdmin = function() {
+            document.querySelector('.admin-dashboard').remove();
+        }
+        
+        window.exportPhotos = function() {
+            const data = JSON.stringify(galleryPhotos);
+            const blob = new Blob([data], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'suriya_gallery_backup.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('✓ Backup downloaded! Keep this file safe.');
+        }
+        
+        window.importPhotos = function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    try {
+                        const imported = JSON.parse(ev.target.result);
+                        galleryPhotos = imported;
+                        saveGallery();
+                        displayGalleryOnSite();
+                        refreshAdminGallery();
+                        alert('✓ Photos imported successfully!');
+                    } catch(err) {
+                        alert('Invalid backup file!');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+        
+        // Category buttons
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                displayGalleryOnSite();
+            });
+        });
+        
+        // Booking Form
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const service = document.getElementById('service').value;
+            const date = document.getElementById('date').value;
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const notes = document.getElementById('notes').value;
+
+            if(!service || !date || !name || !phone) {
+                alert('Please fill all required fields!');
+                return;
+            }
+
+            const formattedDate = new Date(date).toLocaleDateString('en-IN');
+            const message = `*New Booking Request from Website*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Service:* ${service}%0A*Date:* ${formattedDate}%0A*Notes:* ${notes || 'None'}%0A%0APlease confirm availability.`;
+            const whatsappUrl = `https://wa.me/917006336467?text=${message}`;
+            
+            window.open(whatsappUrl, '_blank');
+            alert('✓ Booking request sent! You will be redirected to WhatsApp for confirmation.');
+            this.reset();
+        });
+        
+        // Mobile menu
+        document.querySelector('.menu-btn').addEventListener('click', () => {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // Set min date
+        const today = new Date().toISOString().split('T')[0];
+        if(document.getElementById('date')) {
+            document.getElementById('date').min = today;
+        }
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Initialize
+        loadGallery();
+    </script>
+</body>
+</html>
