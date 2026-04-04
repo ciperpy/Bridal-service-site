@@ -931,7 +931,7 @@
         // Set minimum date to today
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
 
-        // GALLERY MANAGEMENT
+        // GALLERY MANAGEMENT WITH NEW IMAGES ADDED
         const ADMIN_PASSWORD = "098321opop";
         let galleryPhotos = [];
 
@@ -940,10 +940,17 @@
             if(saved) {
                 galleryPhotos = JSON.parse(saved);
             } else {
+                // Default gallery with ALL your new images
                 galleryPhotos = [
-                    { id: Date.now() + 1, url: 'https://images.unsplash.com/photo-1605496036006-fa2e0e6b7b4b?w=400', category: 'bridal', title: 'Bridal Makeup' },
-                    { id: Date.now() + 2, url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400', category: 'party', title: 'Party Makeup' },
-                    { id: Date.now() + 3, url: 'https://images.unsplash.com/photo-1588392382834-89c6b12b0ddb?w=400', category: 'mehndi', title: 'Beautiful Mehndi' }
+                    // Bridal Makeup Section (2 images)
+                    { id: Date.now() + 1, url: 'https://i.ibb.co/PvBkvhGZ/DSKjwqy-EXba-WEBP.jpg', category: 'bridal', title: 'Bridal Makeup Look 1' },
+                    { id: Date.now() + 2, url: 'https://i.ibb.co/j9ch22Rr/DSKjwqy-EXba-WEBP-1.jpg', category: 'bridal', title: 'Bridal Makeup Look 2' },
+                    // Mehndi Designs Section (3 images)
+                    { id: Date.now() + 3, url: 'https://i.ibb.co/gM6RsrHM/DWjj-NKk-U64-WEBP.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 1' },
+                    { id: Date.now() + 4, url: 'https://i.ibb.co/67sZG8ZN/DWjj-NKk-U64-WEBP-2.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 2' },
+                    { id: Date.now() + 5, url: 'https://i.ibb.co/BKw7s0KV/DWjj-NKk-U64-WEBP-1.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 3' },
+                    // Party Makeup sample (keeping 1 from before)
+                    { id: Date.now() + 6, url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400', category: 'party', title: 'Party Makeup' }
                 ];
                 saveGallery();
             }
