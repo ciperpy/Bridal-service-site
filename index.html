@@ -401,7 +401,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Packages Section with Floating Animation */
+        /* Packages */
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -415,36 +415,11 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            animation: floatCard 3s ease-in-out infinite;
-        }
-
-        /* Different animation delays for each card */
-        .package-card:nth-child(1) {
-            animation-delay: 0s;
-        }
-        .package-card:nth-child(2) {
-            animation-delay: 0.5s;
-        }
-        .package-card:nth-child(3) {
-            animation-delay: 1s;
-        }
-
-        @keyframes floatCard {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
         }
 
         .package-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(122,44,62,0.3);
-            animation: none;
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(122,44,62,0.2);
         }
 
         .package-header {
@@ -805,10 +780,10 @@
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            animation: floatButton 2s ease-in-out infinite;
+            animation: float 2s ease-in-out infinite;
         }
 
-        @keyframes floatButton {
+        @keyframes float {
             0%, 100% {
                 transform: translateY(0px);
             }
@@ -1081,16 +1056,6 @@
             .cursor-glow {
                 display: none;
             }
-            .package-card {
-                animation: none;
-            }
-            @keyframes floatCard {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-5px); }
-            }
-            .package-card:nth-child(1), .package-card:nth-child(2), .package-card:nth-child(3) {
-                animation: floatCard 3s ease-in-out infinite;
-            }
         }
     </style>
 </head>
@@ -1134,7 +1099,7 @@
             <p data-aos="fade-up" data-aos-delay="200" style="margin-top: 1rem;">With a keen eye for detail and a commitment to perfection, she specializes in creating elegant bridal looks and intricate mehndi designs that enhance natural beauty. Her goal is simple — to make every client feel confident, beautiful, and truly special on their important day.</p>
             <p data-aos="fade-up" data-aos-delay="300" style="margin-top: 1rem; font-weight: 500; color: var(--primary);">Suriya believes that makeup is not just about appearance, but about bringing out the best version of every individual with grace and style.</p>
         </div>
-
+        
         <!-- Experience Counter -->
         <div class="experience-box" data-aos="zoom-in" data-aos-delay="400" style="text-align: center; padding: 2rem; background: var(--secondary-light); border-radius: 20px; margin-top: 2rem;">
             <span class="counter" id="yearCounter" style="font-size: 2.5rem; font-weight: bold; color: var(--primary);">0</span>
@@ -1168,7 +1133,7 @@
         </div>
     </section>
 
-    <!-- Packages Section with Floating Animation -->
+    <!-- Packages Section -->
     <section id="packages" class="section">
         <h2 class="section-title" data-aos="fade-up">Packages & Pricing</h2>
         <div class="packages-grid">
@@ -1438,17 +1403,17 @@
         function animateCounter() {
             const counter = document.getElementById('yearCounter');
             if (!counter) return;
-
+            
             const counterTop = counter.getBoundingClientRect().top;
             const windowHeight = window.innerHeight;
-
+            
             if (counterTop < windowHeight - 100 && !counter.hasAttribute('data-animated')) {
                 counter.setAttribute('data-animated', 'true');
                 let count = 0;
                 const target = 4;
                 const duration = 2000;
                 const increment = target / (duration / 16);
-
+                
                 const updateCounter = () => {
                     count += increment;
                     if (count < target) {
@@ -1468,15 +1433,14 @@
         // Form Validation with Shake Animation and Confetti
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
+            
             const service = document.getElementById('service').value;
             const date = document.getElementById('date').value;
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
-            const notes = document.getElementById('notes').value;
-
+            
             let hasError = false;
-
+            
             if(!service) {
                 document.getElementById('service').classList.add('shake');
                 setTimeout(() => document.getElementById('service').classList.remove('shake'), 500);
@@ -1497,23 +1461,23 @@
                 setTimeout(() => document.getElementById('phone').classList.remove('shake'), 500);
                 hasError = true;
             }
-
+            
             if(hasError) {
                 alert('Please fill all required fields!');
                 return;
             }
-
+            
             // Show success animation with confetti
             const successDiv = document.getElementById('formSuccess');
             successDiv.style.display = 'block';
-
+            
             canvasConfetti({
                 particleCount: 150,
                 spread: 70,
                 origin: { y: 0.6 },
                 colors: ['#7a2c3e', '#d4af7a', '#fff5e8']
             });
-
+            
             setTimeout(() => {
                 const formattedDate = new Date(date).toLocaleDateString('en-IN');
                 const message = `*New Booking Request from Website*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Service:* ${service}%0A*Date:* ${formattedDate}%0A*Notes:* ${notes || 'None'}%0A%0APlease confirm availability.`;
@@ -1651,24 +1615,24 @@
             const url = document.getElementById('imageUrl').value.trim();
             const category = document.getElementById('categorySelect').value;
             const title = document.getElementById('titleInput').value.trim() || 'Beautiful Work';
-
+            
             if(!url) {
                 alert('Please paste an image URL!');
                 return;
             }
-
+            
             const newPhoto = {
                 id: Date.now(),
                 url: url,
                 category: category,
                 title: title
             };
-
+            
             galleryPhotos.push(newPhoto);
             saveGallery();
             displayGalleryOnSite();
             refreshAdminGallery();
-
+            
             document.getElementById('imageUrl').value = '';
             document.getElementById('titleInput').value = '';
             alert('✓ Photo added successfully!');
