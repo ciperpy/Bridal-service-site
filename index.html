@@ -14,6 +14,12 @@
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+
     <style>
         * {
             margin: 0;
@@ -26,6 +32,20 @@
             background-color: #fff5e8;
             color: #2c2c2c;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Custom Cursor Glow Effect */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212,175,122,0.08) 0%, rgba(212,175,122,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            transform: translate(-50%, -50%);
         }
 
         h1, h2, h3, h4, .logo {
@@ -41,6 +61,22 @@
             --light: #fff5e8;
             --dark: #2c2c2c;
             --gray: #6b6b6b;
+        }
+
+        /* Page Transition Fade */
+        .fade-page {
+            animation: pageFade 0.5s ease-out;
+        }
+
+        @keyframes pageFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Navigation */
@@ -108,16 +144,56 @@
             cursor: pointer;
         }
 
-        /* Hero Section */
+        /* Hero Section with Ken Burns Effect */
         .hero {
             height: 100vh;
-            background: linear-gradient(135deg, rgba(122,44,62,0.7), rgba(212,175,122,0.3)), url('https://images.unsplash.com/photo-1605496036006-fa2e0e6b7b4b?w=1600') center/cover;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
             margin-top: 0;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(122,44,62,0.6), rgba(212,175,122,0.3));
+            z-index: 1;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1605496036006-fa2e0e6b7b4b?w=1600') center/cover;
+            animation: kenBurns 20s ease-in-out infinite;
+            transform: scale(1);
+        }
+
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero-content h1 {
@@ -139,7 +215,7 @@
             animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
-        /* Button Animations */
+        /* Button Animations with Bounce on Load */
         .btn {
             padding: 12px 32px;
             border: none;
@@ -152,6 +228,21 @@
             display: inline-block;
             position: relative;
             overflow: hidden;
+            animation: gentleBounce 0.6s ease-out;
+        }
+
+        @keyframes gentleBounce {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .btn-primary {
@@ -211,13 +302,25 @@
             width: 100px;
         }
 
-        /* Gallery */
+        /* Gallery Category Buttons Slide-in Animation */
         .gallery-categories {
             display: flex;
             justify-content: center;
             gap: 1rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
+            animation: slideInDown 0.6s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .category-btn {
@@ -283,7 +386,22 @@
             bottom: 0;
         }
 
-        /* Packages */
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--secondary-light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Packages Section with Floating Animation */
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -296,11 +414,37 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            animation: floatCard 3s ease-in-out infinite;
+        }
+
+        /* Different animation delays for each card */
+        .package-card:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .package-card:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        .package-card:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes floatCard {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         .package-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(122,44,62,0.2);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(122,44,62,0.3);
+            animation: none;
         }
 
         .package-header {
@@ -359,12 +503,22 @@
             display: inline-block;
             margin-top: 10px;
             animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        .popular-badge:hover {
+            animation: shake 0.5s ease;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
+            0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         /* Booking Form */
@@ -404,11 +558,23 @@
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: var(--secondary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(212,175,122,0.2);
+            box-shadow: 0 0 0 3px rgba(212,175,122,0.2), 0 0 0 5px rgba(212,175,122,0.1);
             transform: scale(1.01);
         }
 
-        /* Modal Styles */
+        /* Input Shake Animation */
+        .shake {
+            animation: shakeEffect 0.3s ease-in-out;
+            border-color: red !important;
+        }
+
+        @keyframes shakeEffect {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Modal Styles with Backdrop Blur */
         .modal {
             display: none;
             position: fixed;
@@ -416,15 +582,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
             z-index: 2000;
             overflow-y: auto;
             animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; backdrop-filter: blur(0px); }
+            to { opacity: 1; backdrop-filter: blur(8px); }
         }
 
         .modal-content {
@@ -437,17 +604,35 @@
             position: relative;
             max-height: 80vh;
             overflow-y: auto;
-            animation: slideUp 0.4s ease;
         }
 
-        @keyframes slideUp {
+        #reviewsModal .modal-content {
+            animation: slideFromLeft 0.4s ease;
+        }
+
+        #reelsModal .modal-content {
+            animation: slideFromRight 0.4s ease;
+        }
+
+        @keyframes slideFromLeft {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateX(-50px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
             }
         }
 
@@ -597,7 +782,7 @@
             transform: scale(1.01);
         }
 
-        /* Floating Action Buttons */
+        /* Floating Buttons with Bobbing Animation */
         .floating-buttons {
             position: fixed;
             bottom: 30px;
@@ -620,11 +805,30 @@
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: floatButton 2s ease-in-out infinite;
+        }
+
+        @keyframes floatButton {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .float-btn:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .float-btn:nth-child(2) {
+            animation-delay: 0.3s;
         }
 
         .float-btn:hover {
-            transform: scale(1.15) rotate(5deg);
+            transform: scale(1.15) translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            animation: none;
         }
 
         .float-whatsapp {
@@ -651,6 +855,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(8px);
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -668,6 +873,17 @@
             max-height: 90vh;
             overflow-y: auto;
             animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .admin-header {
@@ -778,7 +994,38 @@
             word-break: break-all;
         }
 
-        /* Fade-in on Scroll Animation */
+        /* Success Checkmark Animation */
+        .success-checkmark {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: #4CAF50;
+            border-radius: 50%;
+            position: relative;
+            animation: scaleCheck 0.5s ease;
+        }
+
+        .success-checkmark::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        @keyframes scaleCheck {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Fade-up Animation Class */
         .fade-up {
             opacity: 0;
             transform: translateY(30px);
@@ -799,22 +1046,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* Counter Animation */
-        .counter {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
-            display: inline-block;
-        }
-
-        .experience-box {
-            text-align: center;
-            padding: 2rem;
-            background: var(--secondary-light);
-            border-radius: 20px;
-            margin-top: 2rem;
         }
 
         @media (max-width: 768px) {
@@ -847,10 +1078,26 @@
                 height: 50px;
                 font-size: 1.3rem;
             }
+            .cursor-glow {
+                display: none;
+            }
+            .package-card {
+                animation: none;
+            }
+            @keyframes floatCard {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-5px); }
+            }
+            .package-card:nth-child(1), .package-card:nth-child(2), .package-card:nth-child(3) {
+                animation: floatCard 3s ease-in-out infinite;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Custom Cursor Glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">Suriya<span>'s</span> Bridal Studio</div>
@@ -868,6 +1115,7 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-bg"></div>
         <div class="hero-content">
             <h1>Get your perfect bridal glow</h1>
             <p>Suriya Nabi - 4+ Years of Excellence in Makeup & Mehndi Artistry</p>
@@ -878,18 +1126,18 @@
         </div>
     </section>
 
-    <!-- About Section with Counter -->
+    <!-- About Section -->
     <section id="about" class="section">
-        <h2 class="section-title fade-up">About Suriya</h2>
+        <h2 class="section-title" data-aos="fade-up">About Suriya</h2>
         <div style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.1rem; line-height: 1.8;">
-            <p class="fade-up">Suriya is a passionate and dedicated makeup and mehndi artist who has been in love with her craft since childhood. What started as a deep interest has now grown into a professional journey backed by over 4 years of hands-on experience.</p>
-            <p class="fade-up" style="margin-top: 1rem;">With a keen eye for detail and a commitment to perfection, she specializes in creating elegant bridal looks and intricate mehndi designs that enhance natural beauty. Her goal is simple — to make every client feel confident, beautiful, and truly special on their important day.</p>
-            <p class="fade-up" style="margin-top: 1rem; font-weight: 500; color: var(--primary);">Suriya believes that makeup is not just about appearance, but about bringing out the best version of every individual with grace and style.</p>
+            <p data-aos="fade-up" data-aos-delay="100">Suriya is a passionate and dedicated makeup and mehndi artist who has been in love with her craft since childhood. What started as a deep interest has now grown into a professional journey backed by over 4 years of hands-on experience.</p>
+            <p data-aos="fade-up" data-aos-delay="200" style="margin-top: 1rem;">With a keen eye for detail and a commitment to perfection, she specializes in creating elegant bridal looks and intricate mehndi designs that enhance natural beauty. Her goal is simple — to make every client feel confident, beautiful, and truly special on their important day.</p>
+            <p data-aos="fade-up" data-aos-delay="300" style="margin-top: 1rem; font-weight: 500; color: var(--primary);">Suriya believes that makeup is not just about appearance, but about bringing out the best version of every individual with grace and style.</p>
         </div>
 
         <!-- Experience Counter -->
-        <div class="experience-box fade-up">
-            <span class="counter" id="yearCounter">0</span>
+        <div class="experience-box" data-aos="zoom-in" data-aos-delay="400" style="text-align: center; padding: 2rem; background: var(--secondary-light); border-radius: 20px; margin-top: 2rem;">
+            <span class="counter" id="yearCounter" style="font-size: 2.5rem; font-weight: bold; color: var(--primary);">0</span>
             <span style="font-size: 2rem; color: var(--primary);">+</span>
             <h3 style="margin-top: 0.5rem;">Years of Experience</h3>
             <p style="color: var(--gray);">Creating beautiful bridal looks since 2020</p>
@@ -898,19 +1146,19 @@
 
     <!-- Gallery Section -->
     <section id="gallery" class="section" style="background: var(--secondary-light);">
-        <h2 class="section-title fade-up">Our Work</h2>
-        <div class="gallery-categories fade-up">
+        <h2 class="section-title" data-aos="fade-up">Our Work</h2>
+        <div class="gallery-categories">
             <button class="category-btn active" data-category="all">All</button>
             <button class="category-btn" data-category="bridal">Bridal Makeup</button>
             <button class="category-btn" data-category="party">Party Makeup</button>
             <button class="category-btn" data-category="mehndi">Mehndi Designs</button>
         </div>
         <div class="gallery-grid" id="gallery-grid">
-            <div style="text-align: center; padding: 2rem;">Loading gallery...</div>
+            <div style="text-align: center; padding: 2rem;"><div class="loading-spinner"></div> Loading gallery...</div>
         </div>
 
         <!-- Buttons to view Reviews and Reels -->
-        <div class="buttons-container fade-up">
+        <div class="buttons-container" data-aos="fade-up">
             <button class="view-btn" onclick="openReviewsModal()">
                 <i class="fas fa-star"></i> Client Reviews
             </button>
@@ -920,11 +1168,11 @@
         </div>
     </section>
 
-    <!-- Packages Section -->
+    <!-- Packages Section with Floating Animation -->
     <section id="packages" class="section">
-        <h2 class="section-title fade-up">Packages & Pricing</h2>
+        <h2 class="section-title" data-aos="fade-up">Packages & Pricing</h2>
         <div class="packages-grid">
-            <div class="package-card fade-up" data-aos-delay="100">
+            <div class="package-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="package-header">
                     <h3>Basic Package</h3>
                     <div class="package-price">₹3,000</div>
@@ -940,7 +1188,7 @@
                 </div>
             </div>
 
-            <div class="package-card fade-up" data-aos-delay="200">
+            <div class="package-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="package-header" style="background: var(--secondary); color: var(--primary-dark);">
                     <h3>Standard Package</h3>
                     <div class="package-price">₹4,000</div>
@@ -957,7 +1205,7 @@
                 </div>
             </div>
 
-            <div class="package-card fade-up" data-aos-delay="300">
+            <div class="package-card" data-aos="fade-up" data-aos-delay="300">
                 <div class="package-header">
                     <h3>Premium Bridal Package</h3>
                     <div class="package-price">₹5,000</div>
@@ -979,8 +1227,8 @@
 
     <!-- Booking Section -->
     <section id="booking" class="section" style="background: var(--secondary-light);">
-        <h2 class="section-title fade-up">Book Your Appointment</h2>
-        <div class="booking-container fade-up">
+        <h2 class="section-title" data-aos="fade-up">Book Your Appointment</h2>
+        <div class="booking-container" data-aos="zoom-in">
             <form id="bookingForm">
                 <div class="form-group">
                     <label>Select Service</label>
@@ -1009,6 +1257,10 @@
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Book Now</button>
             </form>
+            <div id="formSuccess" style="text-align: center; margin-top: 1rem; display: none;">
+                <div class="success-checkmark"></div>
+                <p style="margin-top: 0.5rem; color: green;">✓ Booking confirmed! You'll be redirected to WhatsApp.</p>
+            </div>
             <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">✨ You'll receive a confirmation shortly ✨</p>
         </div>
     </section>
@@ -1072,31 +1324,31 @@
 
     <!-- Contact Section -->
     <section id="contact" class="section">
-        <h2 class="section-title fade-up">Get in Touch</h2>
+        <h2 class="section-title" data-aos="fade-up">Get in Touch</h2>
         <div class="contact-grid">
             <div class="contact-info">
-                <div class="contact-item fade-up">
+                <div class="contact-item" data-aos="fade-right" data-aos-delay="100">
                     <i class="fas fa-phone"></i>
                     <div>+91 6005644125</div>
                 </div>
-                <div class="contact-item fade-up">
+                <div class="contact-item" data-aos="fade-right" data-aos-delay="150">
                     <i class="fas fa-envelope"></i>
                     <div>mehandiartistsuriya@gmail.com</div>
                 </div>
-                <div class="contact-item fade-up">
+                <div class="contact-item" data-aos="fade-right" data-aos-delay="200">
                     <i class="fab fa-instagram"></i>
                     <div>@mehandi_art_by_suriya</div>
                 </div>
-                <div class="contact-item fade-up">
+                <div class="contact-item" data-aos="fade-right" data-aos-delay="250">
                     <i class="fab fa-whatsapp"></i>
                     <div>+91 6005644125 (WhatsApp)</div>
                 </div>
-                <div class="contact-item fade-up">
+                <div class="contact-item" data-aos="fade-right" data-aos-delay="300">
                     <i class="fas fa-map-marker-alt"></i>
                     <div>Pethmakhama Magam, Budgam, Jammu and Kashmir</div>
                 </div>
             </div>
-            <div class="map-container fade-up">
+            <div class="map-container" data-aos="fade-left" data-aos-delay="200">
                 <iframe src="https://maps.google.com/maps?q=Budgam%2C%20Jammu%20and%20Kashmir&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
@@ -1117,7 +1369,43 @@
         </a>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            offset: 100,
+            once: true
+        });
+
+        // Custom Cursor Glow Effect
+        const cursorGlow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', function(e) {
+            cursorGlow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+
+        // Page Fade Transition on Anchor Clicks
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if(target) {
+                    document.body.classList.remove('fade-page');
+                    void document.body.offsetWidth;
+                    document.body.classList.add('fade-page');
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                    setTimeout(() => {
+                        document.body.classList.remove('fade-page');
+                    }, 500);
+                }
+            });
+        });
+
         // Modal Functions
         function openReviewsModal() {
             document.getElementById('reviewsModal').style.display = 'block';
@@ -1146,24 +1434,7 @@
             if (event.target == reelsModal) closeReelsModal();
         }
 
-        // Scroll Animation - Fade Up on Scroll
-        const fadeElements = document.querySelectorAll('.fade-up');
-
-        function checkFadeIn() {
-            fadeElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                if (elementTop < windowHeight - 100) {
-                    element.classList.add('visible');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', checkFadeIn);
-        window.addEventListener('load', checkFadeIn);
-        checkFadeIn();
-
-        // Counter Animation for Experience
+        // Counter Animation
         function animateCounter() {
             const counter = document.getElementById('yearCounter');
             if (!counter) return;
@@ -1194,7 +1465,66 @@
         window.addEventListener('scroll', animateCounter);
         window.addEventListener('load', animateCounter);
 
-        // GALLERY MANAGEMENT - ONLY STORES URLS (Works on all devices!)
+        // Form Validation with Shake Animation and Confetti
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const service = document.getElementById('service').value;
+            const date = document.getElementById('date').value;
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const notes = document.getElementById('notes').value;
+
+            let hasError = false;
+
+            if(!service) {
+                document.getElementById('service').classList.add('shake');
+                setTimeout(() => document.getElementById('service').classList.remove('shake'), 500);
+                hasError = true;
+            }
+            if(!date) {
+                document.getElementById('date').classList.add('shake');
+                setTimeout(() => document.getElementById('date').classList.remove('shake'), 500);
+                hasError = true;
+            }
+            if(!name) {
+                document.getElementById('name').classList.add('shake');
+                setTimeout(() => document.getElementById('name').classList.remove('shake'), 500);
+                hasError = true;
+            }
+            if(!phone) {
+                document.getElementById('phone').classList.add('shake');
+                setTimeout(() => document.getElementById('phone').classList.remove('shake'), 500);
+                hasError = true;
+            }
+
+            if(hasError) {
+                alert('Please fill all required fields!');
+                return;
+            }
+
+            // Show success animation with confetti
+            const successDiv = document.getElementById('formSuccess');
+            successDiv.style.display = 'block';
+
+            canvasConfetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#7a2c3e', '#d4af7a', '#fff5e8']
+            });
+
+            setTimeout(() => {
+                const formattedDate = new Date(date).toLocaleDateString('en-IN');
+                const message = `*New Booking Request from Website*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Service:* ${service}%0A*Date:* ${formattedDate}%0A*Notes:* ${notes || 'None'}%0A%0APlease confirm availability.`;
+                const whatsappUrl = `https://wa.me/917006336467?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+                successDiv.style.display = 'none';
+                this.reset();
+            }, 1500);
+        });
+
+        // GALLERY MANAGEMENT
         const ADMIN_PASSWORD = "098321opop";
         let galleryPhotos = [];
 
@@ -1202,9 +1532,7 @@
             const saved = localStorage.getItem('suriya_gallery_urls');
             if(saved) {
                 galleryPhotos = JSON.parse(saved);
-                console.log('Loaded photos:', galleryPhotos);
             } else {
-                // Default sample photos with working URLs
                 galleryPhotos = [
                     { id: Date.now() + 1, url: 'https://images.unsplash.com/photo-1605496036006-fa2e0e6b7b4b?w=400', category: 'bridal', title: 'Bridal Makeup' },
                     { id: Date.now() + 2, url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400', category: 'party', title: 'Party Makeup' },
@@ -1217,7 +1545,6 @@
 
         function saveGallery() {
             localStorage.setItem('suriya_gallery_urls', JSON.stringify(galleryPhotos));
-            console.log('Saved photos:', galleryPhotos);
         }
 
         function displayGalleryOnSite() {
@@ -1234,8 +1561,10 @@
                     grid.innerHTML = '<div style="text-align: center; padding: 2rem;">No photos yet. Add photos from admin panel!</div>';
                 } else {
                     grid.innerHTML = filtered.map((photo, index) => `
-                        <div class="gallery-item fade-up" style="transition-delay: ${index * 0.05}s">
-                            <img src="${photo.url}" alt="${photo.title}" onerror="this.src='https://via.placeholder.com/300?text=Invalid+URL+Check+Link'">
+                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="${index * 50}">
+                            <a href="${photo.url}" data-lightbox="gallery" data-title="${photo.title}">
+                                <img src="${photo.url}" alt="${photo.title}" onerror="this.src='https://via.placeholder.com/300?text=Invalid+URL'">
+                            </a>
                             <div class="gallery-overlay">
                                 <p>✨ ${photo.title}</p>
                             </div>
@@ -1243,7 +1572,7 @@
                     `).join('');
                 }
             }
-            checkFadeIn();
+            AOS.refresh();
         }
 
         // Check for admin access
@@ -1284,44 +1613,34 @@
                         <h2 style="color: var(--primary);">Admin Dashboard 📸</h2>
                         <button onclick="closeAdmin()" class="close-admin" style="background: #dc3545;">Close</button>
                     </div>
-
                     <div class="instruction-box">
                         <strong>📌 IMPORTANT - FOR PHOTOS TO SHOW ON ALL DEVICES:</strong><br><br>
-                        1. Go to <a href="https://imgbb.com" target="_blank" style="color: var(--primary);">imgbb.com</a> on your phone<br>
-                        2. Click "Start Uploading" and select your photo<br>
-                        3. After upload, copy the <strong>"Direct Link"</strong><br>
-                        4. Paste that link below and click "Add Photo"<br><br>
-                        <strong>✅ This method makes photos visible on EVERY device!</strong><br><br>
-                        <div class="sample-url">Example URL: https://i.ibb.co/xxxxx/image.jpg</div>
+                        1. Go to <a href="https://imgbb.com" target="_blank">imgbb.com</a><br>
+                        2. Upload photo and copy <strong>"Direct Link"</strong><br>
+                        3. Paste below and click "Add Photo"<br>
+                        <strong>✅ Photos visible on EVERY device!</strong>
                     </div>
-
                     <div class="url-input-group">
-                        <label>📷 Image URL (Paste Direct Link from ImgBB):</label>
-                        <input type="text" id="imageUrl" placeholder="https://i.ibb.co/xxxxx/image.jpg" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
+                        <label>📷 Image URL:</label>
+                        <input type="text" id="imageUrl" placeholder="https://i.ibb.co/xxxxx/image.jpg">
                     </div>
-
                     <div class="url-input-group">
                         <label>🏷️ Category:</label>
-                        <select id="categorySelect" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
+                        <select id="categorySelect">
                             <option value="bridal">Bridal Makeup</option>
                             <option value="party">Party Makeup</option>
                             <option value="mehndi">Mehndi Designs</option>
                         </select>
                     </div>
-
                     <div class="url-input-group">
                         <label>📝 Title:</label>
-                        <input type="text" id="titleInput" placeholder="Beautiful Bridal Makeup" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px;">
+                        <input type="text" id="titleInput" placeholder="Beautiful Bridal Makeup">
                     </div>
-
-                    <button onclick="addPhotoByUrl()" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">➕ Add Photo (Visible on ALL Devices)</button>
-
-                    <h3 style="margin: 1rem 0;">📸 Current Gallery (${galleryPhotos.length} photos)</h3>
+                    <button onclick="addPhotoByUrl()" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">➕ Add Photo</button>
+                    <h3>📸 Gallery (${galleryPhotos.length} photos)</h3>
                     <div id="adminGalleryGrid" class="admin-gallery-grid"></div>
-
-                    <button onclick="exportPhotos()" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">📥 Export Photos (Backup)</button>
-                    <button onclick="importPhotos()" class="btn btn-outline" style="margin-top: 0.5rem; width: 100%; background: var(--secondary-light);">📤 Import Photos (Restore)</button>
-                    <p style="text-align: center; margin-top: 1rem; font-size: 12px; color: green;">✅ Photos stored as URLs - visible on ALL devices!</p>
+                    <button onclick="exportPhotos()" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">📥 Export Backup</button>
+                    <button onclick="importPhotos()" class="btn btn-outline" style="margin-top: 0.5rem; width: 100%;">📤 Import Backup</button>
                 </div>
             `;
             document.body.appendChild(dashboard);
@@ -1334,17 +1653,7 @@
             const title = document.getElementById('titleInput').value.trim() || 'Beautiful Work';
 
             if(!url) {
-                alert('Please paste an image URL from ImgBB!');
-                return;
-            }
-
-            if(!url.startsWith('http://') && !url.startsWith('https://')) {
-                alert('Please enter a valid URL starting with http:// or https://');
-                return;
-            }
-
-            if(url.startsWith('data:image')) {
-                alert('❌ This is a direct upload, not a URL! Please use ImgBB to get a proper URL that works on all devices.');
+                alert('Please paste an image URL!');
                 return;
             }
 
@@ -1362,37 +1671,30 @@
 
             document.getElementById('imageUrl').value = '';
             document.getElementById('titleInput').value = '';
-
-            alert('✓ Photo added successfully!\n\nThis photo will now be visible on ALL devices - phone, laptop, tablet, everywhere!');
+            alert('✓ Photo added successfully!');
         }
 
         window.refreshAdminGallery = function() {
             const grid = document.getElementById('adminGalleryGrid');
             if(grid) {
-                if(galleryPhotos.length === 0) {
-                    grid.innerHTML = '<p style="text-align: center; padding: 1rem;">No photos yet. Add some using the form above!</p>';
-                } else {
-                    grid.innerHTML = galleryPhotos.map(photo => `
-                        <div class="admin-gallery-item">
-                            <img src="${photo.url}" alt="${photo.title}" onerror="this.src='https://via.placeholder.com/150?text=Broken+URL'">
-                            <button class="delete-btn" onclick="deletePhoto(${photo.id})">×</button>
-                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; padding: 5px; font-size: 10px; text-align: center;">
-                                ${photo.title}<br>
-                                <span style="font-size: 8px;">${photo.category}</span>
-                            </div>
+                grid.innerHTML = galleryPhotos.map(photo => `
+                    <div class="admin-gallery-item">
+                        <img src="${photo.url}" onerror="this.src='https://via.placeholder.com/150'">
+                        <button class="delete-btn" onclick="deletePhoto(${photo.id})">×</button>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; padding: 5px; font-size: 10px; text-align: center;">
+                            ${photo.title}
                         </div>
-                    `).join('');
-                }
+                    </div>
+                `).join('');
             }
         }
 
         window.deletePhoto = function(id) {
-            if(confirm('Are you sure you want to delete this photo?')) {
+            if(confirm('Delete this photo?')) {
                 galleryPhotos = galleryPhotos.filter(p => p.id !== id);
                 saveGallery();
                 displayGalleryOnSite();
                 refreshAdminGallery();
-                alert('✓ Photo deleted successfully!');
             }
         }
 
@@ -1409,7 +1711,6 @@
             a.download = 'suriya_gallery_backup.json';
             a.click();
             URL.revokeObjectURL(url);
-            alert('✓ Backup downloaded! Keep this file safe.');
         }
 
         window.importPhotos = function() {
@@ -1421,14 +1722,13 @@
                 const reader = new FileReader();
                 reader.onload = function(ev) {
                     try {
-                        const imported = JSON.parse(ev.target.result);
-                        galleryPhotos = imported;
+                        galleryPhotos = JSON.parse(ev.target.result);
                         saveGallery();
                         displayGalleryOnSite();
                         refreshAdminGallery();
-                        alert('✓ Photos imported successfully!');
+                        alert('Photos imported!');
                     } catch(err) {
-                        alert('Invalid backup file!');
+                        alert('Invalid file!');
                     }
                 };
                 reader.readAsText(file);
@@ -1445,30 +1745,6 @@
             });
         });
 
-        // Booking Form
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const service = document.getElementById('service').value;
-            const date = document.getElementById('date').value;
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const notes = document.getElementById('notes').value;
-
-            if(!service || !date || !name || !phone) {
-                alert('Please fill all required fields!');
-                return;
-            }
-
-            const formattedDate = new Date(date).toLocaleDateString('en-IN');
-            const message = `*New Booking Request from Website*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Service:* ${service}%0A*Date:* ${formattedDate}%0A*Notes:* ${notes || 'None'}%0A%0APlease confirm availability.`;
-            const whatsappUrl = `https://wa.me/917006336467?text=${message}`;
-
-            window.open(whatsappUrl, '_blank');
-            alert('✓ Booking request sent! You will be redirected to WhatsApp for confirmation.');
-            this.reset();
-        });
-
         // Mobile menu
         document.querySelector('.menu-btn').addEventListener('click', () => {
             const navLinks = document.querySelector('.nav-links');
@@ -1481,19 +1757,10 @@
             document.getElementById('date').min = today;
         }
 
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if(target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
         // Initialize
         loadGallery();
+        document.body.classList.add('fade-page');
+        setTimeout(() => document.body.classList.remove('fade-page'), 500);
     </script>
 </body>
 </html>
