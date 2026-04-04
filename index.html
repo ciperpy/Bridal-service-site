@@ -401,7 +401,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Packages */
+        /* Packages Section with Floating Animation */
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -415,11 +415,36 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
+            animation: floatCard 3s ease-in-out infinite;
+        }
+
+        /* Different animation delays for each card */
+        .package-card:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .package-card:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        .package-card:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes floatCard {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         .package-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(122,44,62,0.2);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(122,44,62,0.3);
+            animation: none;
         }
 
         .package-header {
@@ -757,7 +782,7 @@
             transform: scale(1.01);
         }
 
-        /* Floating Buttons with Bobbing Animation */
+        /* Floating Buttons - Always Visible */
         .floating-buttons {
             position: fixed;
             bottom: 30px;
@@ -765,7 +790,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .float-btn {
@@ -780,10 +805,10 @@
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            animation: float 2s ease-in-out infinite;
+            animation: floatButton 2s ease-in-out infinite;
         }
 
-        @keyframes float {
+        @keyframes floatButton {
             0%, 100% {
                 transform: translateY(0px);
             }
@@ -1056,6 +1081,16 @@
             .cursor-glow {
                 display: none;
             }
+            .package-card {
+                animation: none;
+            }
+            @keyframes floatCard {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-5px); }
+            }
+            .package-card:nth-child(1), .package-card:nth-child(2), .package-card:nth-child(3) {
+                animation: floatCard 3s ease-in-out infinite;
+            }
         }
     </style>
 </head>
@@ -1133,7 +1168,7 @@
         </div>
     </section>
 
-    <!-- Packages Section -->
+    <!-- Packages Section with Floating Animation -->
     <section id="packages" class="section">
         <h2 class="section-title" data-aos="fade-up">Packages & Pricing</h2>
         <div class="packages-grid">
@@ -1324,7 +1359,7 @@
         <p>© 2024 Suriya's Bridal Studio. All rights reserved. made with❤️by Ubaid Bilal✨</p>
     </footer>
 
-    <!-- Floating Action Buttons -->
+    <!-- Floating Action Buttons - Always Visible -->
     <div class="floating-buttons">
         <a href="tel:+916005644125" class="float-btn float-call" title="Call Now">
             <i class="fas fa-phone-alt"></i>
@@ -1438,6 +1473,7 @@
             const date = document.getElementById('date').value;
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
+            const notes = document.getElementById('notes').value;
             
             let hasError = false;
             
