@@ -672,7 +672,7 @@
     <section id="about" class="section">
         <h2 class="section-title">About Suriya</h2>
         <div style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.1rem; line-height: 1.8;">
-            <p>Suriya Nabi is a passionate and dedicated makeup and mehndi artist who has been in love with her craft since childhood. What started as a deep interest has now grown into a professional journey backed by over 4 years of hands-on experience.</p>
+            <p>Suriya is a passionate and dedicated makeup and mehndi artist who has been in love with her craft since childhood. What started as a deep interest has now grown into a professional journey backed by over 4 years of hands-on experience.</p>
             <p style="margin-top: 1rem;">With a keen eye for detail and a commitment to perfection, she specializes in creating elegant bridal looks and intricate mehndi designs that enhance natural beauty. Her goal is simple — to make every client feel confident, beautiful, and truly special on their important day.</p>
             <p style="margin-top: 1rem; font-weight: 500; color: var(--primary);">Suriya believes that makeup is not just about appearance, but about bringing out the best version of every individual with grace and style.</p>
         </div>
@@ -686,9 +686,7 @@
             <button class="category-btn" data-category="party">Party Makeup</button>
             <button class="category-btn" data-category="mehndi">Mehndi Designs</button>
         </div>
-        <div class="gallery-grid" id="gallery-grid">
-            <div style="text-align: center; padding: 2rem;">Loading gallery...</div>
-        </div>
+        <div class="gallery-grid" id="gallery-grid"></div>
         <div class="buttons-container">
             <button class="view-btn" onclick="openReviewsModal()">
                 <i class="fas fa-star"></i> Client Reviews
@@ -905,31 +903,19 @@
 
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
 
-        // GALLERY WITH YOUR IMAGES FROM THE IMAGES FOLDER
-        const ADMIN_PASSWORD = "098321opop";
-        let galleryPhotos = [];
-
-        function loadGallery() {
-            const saved = localStorage.getItem('suriya_gallery_urls');
-            if(saved) {
-                galleryPhotos = JSON.parse(saved);
-            } else {
-                galleryPhotos = [
-                    { id: Date.now() + 1, url: 'images/bridal1.webp', category: 'bridal', title: 'Bridal Makeup Look 1' },
-                    { id: Date.now() + 2, url: 'images/bridal2.webp', category: 'bridal', title: 'Bridal Makeup Look 2' },
-                    { id: Date.now() + 3, url: 'images/mehndi1.webp', category: 'mehndi', title: 'Beautiful Mehndi Design 1' },
-                    { id: Date.now() + 4, url: 'images/mehndi2.webp', category: 'mehndi', title: 'Beautiful Mehndi Design 2' },
-                    { id: Date.now() + 5, url: 'images/mehndi3.webp', category: 'mehndi', title: 'Beautiful Mehndi Design 3' },
-                    { id: Date.now() + 6, url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400', category: 'party', title: 'Party Makeup' }
-                ];
-                saveGallery();
-            }
-            displayGalleryOnSite();
-        }
-
-        function saveGallery() {
-            localStorage.setItem('suriya_gallery_urls', JSON.stringify(galleryPhotos));
-        }
+        // ========== YOUR IMAGES ARE HARDCODED HERE ==========
+        // These images will ALWAYS be visible to everyone
+        const galleryPhotos = [
+            // Bridal Makeup Section (2 images)
+            { id: 1, url: 'https://i.postimg.cc/5tkzHhpq/bridal1.webp', category: 'bridal', title: 'Bridal Makeup Look 1' },
+            { id: 2, url: 'https://i.postimg.cc/jdFYFv84/bridal2.jpg', category: 'bridal', title: 'Bridal Makeup Look 2' },
+            // Mehndi Designs Section (3 images)
+            { id: 3, url: 'https://i.postimg.cc/YScKp0B8/mehndi1.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 1' },
+            { id: 4, url: 'https://i.postimg.cc/0QxTw4Q9/mehndi2.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 2' },
+            { id: 5, url: 'https://i.postimg.cc/3RBPCZ4m/mehndi3.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 3' },
+            // Party Makeup sample
+            { id: 6, url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400', category: 'party', title: 'Party Makeup' }
+        ];
 
         function displayGalleryOnSite() {
             const activeBtn = document.querySelector('.category-btn.active');
@@ -943,7 +929,7 @@
                     grid.innerHTML = filtered.map(photo => `
                         <div class="gallery-item">
                             <a href="${photo.url}" data-lightbox="gallery" data-title="${photo.title}">
-                                <img src="${photo.url}" alt="${photo.title}" onerror="this.src='https://via.placeholder.com/300?text=Image+Not+Found'">
+                                <img src="${photo.url}" alt="${photo.title}">
                             </a>
                             <div class="gallery-overlay"><p>✨ ${photo.title}</p></div>
                         </div>
@@ -951,6 +937,70 @@
                 }
             }
         }
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                displayGalleryOnSite();
+            });
+        });
+
+        // Admin panel functionality (still works for adding more photos)
+        const ADMIN_PASSWORD = "098321opop";
+        let additionalPhotos = [];
+
+        function loadAdditionalPhotos() {
+            const saved = localStorage.getItem('suriya_additional_photos');
+            if(saved) {
+                additionalPhotos = JSON.parse(saved);
+            } else {
+                additionalPhotos = [];
+            }
+        }
+
+        function saveAdditionalPhotos() {
+            localStorage.setItem('suriya_additional_photos', JSON.stringify(additionalPhotos));
+        }
+
+        function getAllPhotos() {
+            return [...galleryPhotos, ...additionalPhotos];
+        }
+
+        function displayFullGallery() {
+            const activeBtn = document.querySelector('.category-btn.active');
+            const currentCategory = activeBtn ? activeBtn.dataset.category : 'all';
+            const allPhotos = getAllPhotos();
+            let filtered = currentCategory === 'all' ? allPhotos : allPhotos.filter(p => p.category === currentCategory);
+            const grid = document.getElementById('gallery-grid');
+            if(grid) {
+                if(filtered.length === 0) {
+                    grid.innerHTML = '<div style="text-align: center; padding: 2rem;">No photos yet. Add from admin panel!</div>';
+                } else {
+                    grid.innerHTML = filtered.map(photo => `
+                        <div class="gallery-item">
+                            <a href="${photo.url}" data-lightbox="gallery" data-title="${photo.title}">
+                                <img src="${photo.url}" alt="${photo.title}">
+                            </a>
+                            <div class="gallery-overlay"><p>✨ ${photo.title}</p></div>
+                        </div>
+                    `).join('');
+                }
+            }
+        }
+
+        // Override the category button event to use full gallery
+        const originalDisplay = displayGalleryOnSite;
+        window.displayGalleryOnSite = displayFullGallery;
+        
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.removeEventListener('click', btn.click);
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                displayFullGallery();
+            });
+        });
 
         if(window.location.search.includes('admin=true')) {
             showAdminLogin();
@@ -977,6 +1027,7 @@
         }
 
         function showAdminDashboard() {
+            loadAdditionalPhotos();
             const dashboard = document.createElement('div');
             dashboard.className = 'admin-dashboard';
             dashboard.innerHTML = `
@@ -986,13 +1037,12 @@
                         <button onclick="closeAdmin()" style="background:#dc3545; padding:5px 15px; border:none; border-radius:10px;">Close</button>
                     </div>
                     <div class="instruction-box">
-                        <strong>📌 Photos are stored in the 'images' folder</strong><br>
-                        To add new photos, upload them to the images folder on GitHub<br>
-                        Then add the filename here (e.g., images/newphoto.webp)
+                        <strong>✅ Your 5 main images are already added and visible to everyone!</strong><br>
+                        Use this panel to add EXTRA photos.
                     </div>
                     <div class="url-input-group">
-                        <label>Image URL or Filename:</label>
-                        <input type="text" id="imageUrl" placeholder="images/newphoto.webp or https://...">
+                        <label>Image URL:</label>
+                        <input type="text" id="imageUrl" placeholder="https://i.postimg.cc/xxxxx/image.jpg">
                     </div>
                     <div class="url-input-group">
                         <label>Category:</label>
@@ -1006,8 +1056,8 @@
                         <label>Title:</label>
                         <input type="text" id="titleInput" placeholder="Beautiful Work">
                     </div>
-                    <button onclick="addPhotoByUrl()" class="btn btn-primary" style="width:100%; margin-bottom:1rem;">➕ Add Photo</button>
-                    <h3>Gallery (${galleryPhotos.length} photos)</h3>
+                    <button onclick="addPhotoByUrl()" class="btn btn-primary" style="width:100%; margin-bottom:1rem;">➕ Add Extra Photo</button>
+                    <h3>Your Gallery (${getAllPhotos().length} photos total)</h3>
                     <div id="adminGalleryGrid" class="admin-gallery-grid"></div>
                     <button onclick="exportPhotos()" class="btn btn-primary" style="width:100%; margin-top:1rem;">📥 Export Backup</button>
                     <button onclick="importPhotos()" class="btn btn-outline" style="width:100%; margin-top:0.5rem;">📤 Import Backup</button>
@@ -1019,26 +1069,27 @@
 
         window.addPhotoByUrl = function() {
             const url = document.getElementById('imageUrl').value.trim();
-            if(!url) { alert('Enter URL or filename!'); return; }
+            if(!url) { alert('Enter URL!'); return; }
             const newPhoto = {
                 id: Date.now(),
                 url: url,
                 category: document.getElementById('categorySelect').value,
                 title: document.getElementById('titleInput').value.trim() || 'Beautiful Work'
             };
-            galleryPhotos.push(newPhoto);
-            saveGallery();
-            displayGalleryOnSite();
+            additionalPhotos.push(newPhoto);
+            saveAdditionalPhotos();
+            displayFullGallery();
             refreshAdminGallery();
             document.getElementById('imageUrl').value = '';
             document.getElementById('titleInput').value = '';
-            alert('✓ Photo added!');
+            alert('✓ Extra photo added!');
         }
 
         window.refreshAdminGallery = function() {
             const grid = document.getElementById('adminGalleryGrid');
+            const allPhotos = getAllPhotos();
             if(grid) {
-                grid.innerHTML = galleryPhotos.map(photo => `
+                grid.innerHTML = allPhotos.map(photo => `
                     <div class="admin-gallery-item">
                         <img src="${photo.url}" onerror="this.src='https://via.placeholder.com/150'">
                         <button class="delete-btn" onclick="deletePhoto(${photo.id})">×</button>
@@ -1050,17 +1101,23 @@
 
         window.deletePhoto = function(id) {
             if(confirm('Delete this photo?')) {
-                galleryPhotos = galleryPhotos.filter(p => p.id !== id);
-                saveGallery();
-                displayGalleryOnSite();
+                const mainPhotoIds = [1,2,3,4,5,6];
+                if(mainPhotoIds.includes(id)) {
+                    alert('Cannot delete main gallery photos. You can only delete extra photos you added.');
+                    return;
+                }
+                additionalPhotos = additionalPhotos.filter(p => p.id !== id);
+                saveAdditionalPhotos();
+                displayFullGallery();
                 refreshAdminGallery();
             }
         }
 
         window.closeAdmin = function() { document.querySelector('.admin-dashboard').remove(); }
         window.exportPhotos = function() {
+            const data = JSON.stringify({ mainPhotos: galleryPhotos, additionalPhotos: additionalPhotos });
             const a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob([JSON.stringify(galleryPhotos)], {type: 'application/json'}));
+            a.href = URL.createObjectURL(new Blob([data], {type: 'application/json'}));
             a.download = 'suriya_gallery_backup.json';
             a.click();
         }
@@ -1072,26 +1129,27 @@
                 const file = e.target.files[0];
                 const reader = new FileReader();
                 reader.onload = ev => {
-                    galleryPhotos = JSON.parse(ev.target.result);
-                    saveGallery();
-                    displayGalleryOnSite();
-                    refreshAdminGallery();
-                    alert('Imported!');
+                    try {
+                        const imported = JSON.parse(ev.target.result);
+                        if(imported.additionalPhotos) {
+                            additionalPhotos = imported.additionalPhotos;
+                            saveAdditionalPhotos();
+                        }
+                        displayFullGallery();
+                        refreshAdminGallery();
+                        alert('Imported!');
+                    } catch(err) {
+                        alert('Invalid file!');
+                    }
                 };
                 reader.readAsText(file);
             };
             input.click();
         }
 
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                displayGalleryOnSite();
-            });
-        });
-
-        loadGallery();
+        // Initialize
+        loadAdditionalPhotos();
+        displayFullGallery();
     </script>
 </body>
 </html>
