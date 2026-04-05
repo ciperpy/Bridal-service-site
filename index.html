@@ -48,7 +48,6 @@
             --gray: #6b6b6b;
         }
 
-        /* Navigation - NO extra pages */
         .navbar {
             position: fixed;
             top: 0;
@@ -92,7 +91,6 @@
             cursor: pointer;
         }
 
-        /* Hero Section */
         .hero {
             height: 100vh;
             background: linear-gradient(135deg, rgba(122,44,62,0.7), rgba(212,175,122,0.3)), url('https://images.unsplash.com/photo-1605496036006-fa2e0e6b7b4b?w=1600') center/cover;
@@ -181,7 +179,6 @@
             background: var(--secondary);
         }
 
-        /* Gallery */
         .gallery-categories {
             display: flex;
             justify-content: center;
@@ -245,7 +242,6 @@
             bottom: 0;
         }
 
-        /* Packages */
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -310,7 +306,6 @@
             margin-top: 10px;
         }
 
-        /* Booking Form */
         .booking-container {
             max-width: 600px;
             margin: 0 auto;
@@ -338,7 +333,6 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -427,7 +421,6 @@
             flex-wrap: wrap;
         }
 
-        /* Contact */
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -463,7 +456,6 @@
             overflow: hidden;
         }
 
-        /* FLOATING BUTTONS - ALWAYS VISIBLE */
         .floating-buttons {
             position: fixed;
             bottom: 30px;
@@ -514,7 +506,6 @@
             padding: 2rem;
         }
 
-        /* Admin Panel */
         .admin-login, .admin-dashboard {
             position: fixed;
             top: 0;
@@ -653,7 +644,6 @@
 </head>
 <body>
 
-    <!-- Navigation - ONLY 5 links, NO extra pages -->
     <nav class="navbar">
         <div class="logo">Suriya<span>'s</span> Bridal Studio</div>
         <ul class="nav-links">
@@ -668,7 +658,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Get your perfect bridal glow</h1>
@@ -680,7 +669,6 @@
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="section">
         <h2 class="section-title">About Suriya</h2>
         <div style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.1rem; line-height: 1.8;">
@@ -690,7 +678,6 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
     <section id="gallery" class="section" style="background: var(--secondary-light);">
         <h2 class="section-title">Our Work</h2>
         <div class="gallery-categories">
@@ -712,7 +699,6 @@
         </div>
     </section>
 
-    <!-- Packages Section -->
     <section id="packages" class="section">
         <h2 class="section-title">Packages & Pricing</h2>
         <div class="packages-grid">
@@ -767,7 +753,6 @@
         </div>
     </section>
 
-    <!-- Booking Section -->
     <section id="booking" class="section" style="background: var(--secondary-light);">
         <h2 class="section-title">Book Your Appointment</h2>
         <div class="booking-container">
@@ -803,7 +788,6 @@
         </div>
     </section>
 
-    <!-- Reviews Modal -->
     <div id="reviewsModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeReviewsModal()">&times;</span>
@@ -819,7 +803,6 @@
         </div>
     </div>
 
-    <!-- Reels Modal -->
     <div id="reelsModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeReelsModal()">&times;</span>
@@ -834,7 +817,6 @@
         </div>
     </div>
 
-    <!-- Contact Section -->
     <section id="contact" class="section">
         <h2 class="section-title">Get in Touch</h2>
         <div class="contact-grid">
@@ -851,12 +833,10 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <p>© 2024 Suriya's Bridal Studio | made with ❤️ by Ubaid Bilal</p>
     </footer>
 
-    <!-- FLOATING BUTTONS - VISIBLE FROM THE VERY FIRST SECOND -->
     <div class="floating-buttons">
         <a href="tel:+916005644125" class="float-btn float-call" title="Call Now">
             <i class="fas fa-phone-alt"></i>
@@ -869,10 +849,8 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script>
-        // Initialize AOS
         AOS.init({ duration: 800, offset: 100, once: true });
 
-        // Modal Functions
         function openReviewsModal() {
             document.getElementById('reviewsModal').style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -894,7 +872,6 @@
             if (event.target == document.getElementById('reelsModal')) closeReelsModal();
         }
 
-        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -903,7 +880,6 @@
             });
         });
 
-        // Booking Form
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const service = document.getElementById('service').value;
@@ -922,16 +898,14 @@
             this.reset();
         });
 
-        // Mobile menu toggle
         document.querySelector('.menu-btn').addEventListener('click', () => {
             const navLinks = document.querySelector('.nav-links');
             navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
         });
 
-        // Set minimum date to today
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
 
-        // GALLERY MANAGEMENT WITH NEW IMAGES ADDED
+        // GALLERY WITH YOUR IMAGES FROM THE IMAGES FOLDER
         const ADMIN_PASSWORD = "098321opop";
         let galleryPhotos = [];
 
@@ -940,16 +914,12 @@
             if(saved) {
                 galleryPhotos = JSON.parse(saved);
             } else {
-                // Default gallery with ALL your new images
                 galleryPhotos = [
-                    // Bridal Makeup Section (2 images)
-                    { id: Date.now() + 1, url: 'https://i.ibb.co/PvBkvhGZ/DSKjwqy-EXba-WEBP.jpg', category: 'bridal', title: 'Bridal Makeup Look 1' },
-                    { id: Date.now() + 2, url: 'https://i.ibb.co/j9ch22Rr/DSKjwqy-EXba-WEBP-1.jpg', category: 'bridal', title: 'Bridal Makeup Look 2' },
-                    // Mehndi Designs Section (3 images)
-                    { id: Date.now() + 3, url: 'https://i.ibb.co/gM6RsrHM/DWjj-NKk-U64-WEBP.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 1' },
-                    { id: Date.now() + 4, url: 'https://i.ibb.co/67sZG8ZN/DWjj-NKk-U64-WEBP-2.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 2' },
-                    { id: Date.now() + 5, url: 'https://i.ibb.co/BKw7s0KV/DWjj-NKk-U64-WEBP-1.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 3' },
-                    // Party Makeup sample (keeping 1 from before)
+                    { id: Date.now() + 1, url: 'images/bridal1.webp', category: 'bridal', title: 'Bridal Makeup Look 1' },
+                    { id: Date.now() + 2, url: 'images/bridal2.webp', category: 'bridal', title: 'Bridal Makeup Look 2' },
+                    { id: Date.now() + 3, url: 'images/mehndi1.webp', category: 'mehndi', title: 'Beautiful Mehndi Design 1' },
+                    { id: Date.now() + 4, url: 'images/mehndi2.webp', category: 'mehndi', title: 'Beautiful Mehndi Design 2' },
+                    { id: Date.now() + 5, url: 'images/mehndi3.webp', category: 'mehndi', title: 'Beautiful Mehndi Design 3' },
                     { id: Date.now() + 6, url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400', category: 'party', title: 'Party Makeup' }
                 ];
                 saveGallery();
@@ -973,7 +943,7 @@
                     grid.innerHTML = filtered.map(photo => `
                         <div class="gallery-item">
                             <a href="${photo.url}" data-lightbox="gallery" data-title="${photo.title}">
-                                <img src="${photo.url}" alt="${photo.title}">
+                                <img src="${photo.url}" alt="${photo.title}" onerror="this.src='https://via.placeholder.com/300?text=Image+Not+Found'">
                             </a>
                             <div class="gallery-overlay"><p>✨ ${photo.title}</p></div>
                         </div>
@@ -1016,14 +986,13 @@
                         <button onclick="closeAdmin()" style="background:#dc3545; padding:5px 15px; border:none; border-radius:10px;">Close</button>
                     </div>
                     <div class="instruction-box">
-                        <strong>📌 Add Photos (Visible on ALL devices):</strong><br>
-                        1. Upload to <a href="https://imgbb.com" target="_blank">imgbb.com</a><br>
-                        2. Copy "Direct Link"<br>
-                        3. Paste below + Add
+                        <strong>📌 Photos are stored in the 'images' folder</strong><br>
+                        To add new photos, upload them to the images folder on GitHub<br>
+                        Then add the filename here (e.g., images/newphoto.webp)
                     </div>
                     <div class="url-input-group">
-                        <label>Image URL:</label>
-                        <input type="text" id="imageUrl" placeholder="https://i.ibb.co/xxxxx.jpg">
+                        <label>Image URL or Filename:</label>
+                        <input type="text" id="imageUrl" placeholder="images/newphoto.webp or https://...">
                     </div>
                     <div class="url-input-group">
                         <label>Category:</label>
@@ -1050,7 +1019,7 @@
 
         window.addPhotoByUrl = function() {
             const url = document.getElementById('imageUrl').value.trim();
-            if(!url) { alert('Enter URL!'); return; }
+            if(!url) { alert('Enter URL or filename!'); return; }
             const newPhoto = {
                 id: Date.now(),
                 url: url,
@@ -1063,7 +1032,7 @@
             refreshAdminGallery();
             document.getElementById('imageUrl').value = '';
             document.getElementById('titleInput').value = '';
-            alert('✓ Photo added! Visible on all devices.');
+            alert('✓ Photo added!');
         }
 
         window.refreshAdminGallery = function() {
