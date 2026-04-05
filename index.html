@@ -839,7 +839,7 @@
         <a href="tel:+916005644125" class="float-btn float-call" title="Call Now">
             <i class="fas fa-phone-alt"></i>
         </a>
-        <a href="https://wa.me/917006336467?text=Hi%2C%20I%20want%20to%20book%20a%20service." class="float-btn float-whatsapp" target="_blank" title="WhatsApp">
+        <a href="https://wa.me/916005644125?text=Hi%2C%20I%20want%20to%20book%20a%20service." class="float-btn float-whatsapp" target="_blank" title="WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
@@ -891,7 +891,7 @@
             }
             const formattedDate = new Date(date).toLocaleDateString('en-IN');
             const message = `*New Booking Request*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Service:* ${service}%0A*Date:* ${formattedDate}%0A*Notes:* ${notes || 'None'}%0A%0APlease confirm.`;
-            window.open(`https://wa.me/917006336467?text=${message}`, '_blank');
+            window.open(`https://wa.me/916005644125?text=${message}`, '_blank');
             alert('✓ Booking request sent! Redirecting to WhatsApp...');
             this.reset();
         });
@@ -914,7 +914,7 @@
             { id: 4, url: 'https://i.postimg.cc/0QxTw4Q9/mehndi2.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 2' },
             { id: 5, url: 'https://i.postimg.cc/3RBPCZ4m/mehndi3.jpg', category: 'mehndi', title: 'Beautiful Mehndi Design 3' },
             // Party Makeup sample
-            { id: 6, url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400', category: 'party', title: 'Party Makeup' }
+            { id: 6, url: 'https://i.postimg.cc/PrpdhBvS/images.jpg', category: 'party', title: 'Party Makeup' }
         ];
 
         function displayGalleryOnSite() {
@@ -992,7 +992,7 @@
         // Override the category button event to use full gallery
         const originalDisplay = displayGalleryOnSite;
         window.displayGalleryOnSite = displayFullGallery;
-        
+
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.removeEventListener('click', btn.click);
             btn.addEventListener('click', () => {
